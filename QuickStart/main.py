@@ -10,8 +10,9 @@ from langchain.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.documents import Document
-from langchain.chains import create_retrieval_chain
+from langchain.chains import create_retrieval_chain, ConversationalRetrievalChain
 
+DOC_PATH = "../documents/"
 vec_res = [
     {
         'type': 'url',
@@ -22,37 +23,37 @@ vec_res = [
         'path': 'https://www.ontario.ca/page/ontarios-express-entry-human-capital-priorities-stream'
     }, {
         'type': 'pdf',
-        'path': 'documents/Immigration and Refugee Protection Act.pdf'
+        'path': DOC_PATH + 'Immigration and Refugee Protection Act.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Immigration and Refugee Protection Regulations.pdf'
+        'path': DOC_PATH + 'Immigration and Refugee Protection Regulations.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Immigration Appeal Division Rules.pdf'
+        'path': DOC_PATH + 'Immigration Appeal Division Rules.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Immigration Division Rules.pdf'
+        'path': DOC_PATH + 'Immigration Division Rules.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Oath or Solemn Affirmation of Office Rules.pdf'
+        'path': DOC_PATH + 'Oath or Solemn Affirmation of Office Rules.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Refugee Appeal Division Rules.pdf'
+        'path': DOC_PATH + 'Refugee Appeal Division Rules.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Refugee Protection Division Rules.pdf'
+        'path': DOC_PATH + 'Refugee Protection Division Rules.pdf'
     }, {
         'type': 'pdf',
-        'path': 'documents/Regulatory Impact Analysis Statement - Immigration and Refugee Board of Canada.pdf'
+        'path': DOC_PATH + 'Regulatory Impact Analysis Statement - Immigration and Refugee Board of Canada.pdf'
     }, {
         'type': 'word',
-        'path': 'documents/ONTARIO REGULATION 421:17.doc'
+        'path': DOC_PATH + 'ONTARIO REGULATION 421:17.doc'
     }, {
         'type': 'word',
-        'path': 'documents/ONTARIO REGULATION 422:17.doc'
+        'path': DOC_PATH + 'ONTARIO REGULATION 422:17.doc'
     }, {
         'type': 'word',
-        'path': 'documents/Ontario Immigration Act.doc'
+        'path': DOC_PATH + 'Ontario Immigration Act.doc'
     }
 ]
 
@@ -129,5 +130,7 @@ if __name__ == '__main__':
 
     retriever = vector.as_retriever()
     retrieval_chain = create_retrieval_chain(retriever, document_chain)
+    # todo... to add a conversational retrieval chain
+    # conversational_retrieval_chain = ConversationalRetrievalChain()
     response = retrieval_chain.invoke({'input': q})
     print(response['answer'])
