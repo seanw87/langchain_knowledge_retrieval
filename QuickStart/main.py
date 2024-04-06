@@ -58,6 +58,7 @@ vec_res = [
 
 
 def get_webpage(url):
+    # todo... adopt distributed web crawler here
     loader = WebBaseLoader(url)
     return loader.load()
 
@@ -116,13 +117,13 @@ if __name__ == '__main__':
     # chain = chain | output_parser
     # print('', 'step3', chain.invoke({'input': q}))
 
-    prompt = ChatPromptTemplate.from_template("""Answer the following question based only on the provided context:
-
-    <context>
-    {context}
-    </context>
-
-    Question: {input}""")
+    prompt = ChatPromptTemplate.from_template(
+        """Answer the following question based only on the provided context:
+            <context>
+            {context}
+            </context>
+        Question: {input}"""
+    )
 
     document_chain = create_stuff_documents_chain(llm, prompt)
 
